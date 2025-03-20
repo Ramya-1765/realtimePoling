@@ -1,14 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./stlyes.css"; 
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h2>Admin Dashboard</h2>
-      <button onClick={() => navigate("/create-poll")}>Create New Poll</button>
-      <button onClick={() => navigate("/results")}>Veiw poll results</button>
+    <div className="admin-dashboard">
+      <div className="dashboard-container">
+        <h2>Admin Dashboard</h2>
+        <button className="dashboard-button" onClick={() => navigate("/create-poll")}>
+          Create New Poll
+        </button>
+        <button className="dashboard-button" onClick={() => navigate("/results")}>
+         View Poll Results
+        </button>
+      </div>
     </div>
   );
 };

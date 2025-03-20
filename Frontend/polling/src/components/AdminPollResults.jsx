@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
+import "./stlyes.css"; // Ensure correct filename
 
 const socket = io("http://localhost:5010");
 
@@ -12,7 +13,7 @@ const AdminPollResults = () => {
   // Fetch poll results from the backend
   const fetchPollResults = async () => {
     if (!pollCode) {
-      setError("Please enter a poll code.");
+      setError("❌ Please enter a poll code.");
       return;
     }
     setError("");
@@ -20,7 +21,7 @@ const AdminPollResults = () => {
     try {
       const response = await fetch(`http://localhost:5010/poll-results/${pollCode}`);
       if (!response.ok) {
-        throw new Error("Invalid poll code or poll not found.");
+        throw new Error("❌ Invalid poll code or poll not found.");
       }
 
       const data = await response.json();
@@ -29,7 +30,7 @@ const AdminPollResults = () => {
       setOptions(data.options);
     } catch (error) {
       console.error("❌ Failed to fetch poll results:", error);
-      setError("Invalid poll code or poll not found.");
+      setError("❌ Invalid poll code or poll not found.");
     }
   };
 
@@ -46,37 +47,44 @@ const AdminPollResults = () => {
   }, [pollCode]);
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-2xl font-bold mb-4">Poll Results</h2>
-      <input
-        type="text"
-        placeholder="Enter Poll Code"
-        value={pollCode}
-        onChange={(e) => setPollCode(e.target.value)}
-        className="border p-2 rounded mb-2"
-      />
-      <button
-        onClick={fetchPollResults}
-        className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Fetch Results
-      </button>
-      {error && <p className="text-red-500">{error}</p>}
+    <div className="admin-container">
+      <h2>📊 Poll Results</h2>
+
+      <div className="input-container">
+        <input
+          type="text"
+          placeholder="Enter Poll Code"
+          value={pollCode}
+          onChange={(e) => setPollCode(e.target.value)}
+          className="poll-input"
+        />
+        <button onClick={fetchPollResults} className="fetch-button">🔍 Fetch Results</button>
+      </div>
+
+      {error && <p className="error-message">{error}</p>}
 
       {pollTitle && (
-        <div className="mt-4 p-4 bg-white rounded shadow-md">
-          <h3 className="text-xl font-semibold">{pollTitle}</h3>
+        <div className="results-container">
+          <h3 className="poll-title">📢 {pollTitle}</h3>
           {options.length > 0 ? (
-            <ul className="mt-2">
-              {options.map((option) => (
-                <li key={option.id} className="flex justify-between p-2 border-b">
-                  <span>{option.option_text}</span>
-                  <span className="font-bold">{option.vote_count} votes</span>
-                </li>
-              ))}
-            </ul>
+            <table className="results-table">
+              <thead>
+                <tr>
+                  <th>Option</th>
+                  <th>Votes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {options.map((option) => (
+                  <tr key={option.id}>
+                    <td>{option.option_text}</td>
+                    <td>{option.vote_count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           ) : (
-            <p>No votes yet.</p>
+            <p className="no-votes">No votes yet.</p>
           )}
         </div>
       )}
