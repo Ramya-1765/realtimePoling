@@ -8,6 +8,7 @@ const AdminDashboard = () => {
     <div>
       <h2>Admin Dashboard</h2>
       <button onClick={() => navigate("/create-poll")}>Create New Poll</button>
+      <button onClick={() => navigate("/results")}>Veiw poll results</button>
     </div>
   );
 };
