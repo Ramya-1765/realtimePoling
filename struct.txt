@@ -1,0 +1,19 @@
+realtimepolling
+    Backend
+        node_modules
+        package.json
+        server.js
+        bun.lockb
+    Frontend
+        polling
+            node_modules
+            public
+            src
+            .gitignore
+            index.html
+            package-lock.json
+            package.json
+            vite.comfig.js
+    .gitignore
+    README.md
+

@@ -1,0 +1,40 @@
+
+
+services:
+  backend:
+    build: ./Backend
+    ports:
+      - "5010:5010"
+    volumes:
+      - ./Backend:/app
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - database
+
+  frontend:
+    build: ./Frontend/polling
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Frontend/polling:/app
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+
+  database:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1765
+      POSTGRES_DB: votingdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

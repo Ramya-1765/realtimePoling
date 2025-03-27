@@ -8,8 +8,8 @@
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.14.1",
-    "socket.io": "^4.8.1",
-    "type": "module"
+    "socket.io": "^4.8.1"
+
 
   }
 }
